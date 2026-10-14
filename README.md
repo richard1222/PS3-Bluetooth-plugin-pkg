@@ -40,3 +40,7 @@ All research documentation is available in the repo/workspace files.
 - Using custom plugins carries risk - wrong plugin can cause boot freeze. Keep PS3 recovery/safe mode in mind.
 - Plugin must be Cobra-compatible (Cobra 8.1 on Rebug 4.84.2).
 - This is reversible - just remove the line from boot_plugins.txt and delete the sprx.
+
+## Plugin Status
+The plugin in plugin/ is currently a **stub**. It compiles but does not yet contain the actual BT patches. The real patches require extracting and diffing luetooth.sprx/libbt.sprx from the CFW PUPs.
+
