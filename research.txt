@@ -1,0 +1,126 @@
+﻿PS3 Bluetooth 3rd party headphones research
+Started: Wed Oct 14 2026
+Goal: Can we make a bluetooth pkg or plugin to allow 3rd party headphones to connect to PS3 like Bose QC35? Evilnat CFW 4.93 has this feature - reverse engineer if possible.
+
+
+UPDATED: Wed Oct 14 2026 - Target is Rebug CFW 4.84.2 (not Evilnat)
+
+Target: Rebug CFW 4.84.2 - Bluetooth support for 3rd party headsets (Bose QC35 etc)
+## PS3 Bluetooth 3rd Party Headphones - Rebug 4.84.2
+
+Target: Rebug 4.84.2 (Cobra 8.1). Goal: Allow 3rd party BT headphones (e.g. Bose QC35, QC35II, QC45, Sony WH-1000XM3/4, generic A2DP) to pair/connect properly (audio routing).
+
+## Key Concepts
+- PS3 uses Sony's Bluetooth stack - heavily restricted to "officially supported" profiles/devices (headset profile HSP/HFP, some A2DP implementations). Many modern ANC headphones don't pair or don't get A2DP audio properly.
+- Cobra/Mamba on CFW can patch system modules. Evilnat added expanded BT device support in newer builds - people want similar for Rebug 4.84.2.
+- Possible approaches: replace/patche bluetooth libraries (bluetooth.sprx, btlib.sprx?), patch bd_addr restrictions, patch device class/profiles, add A2DP sink compatibility.
+- Plugins: .sprx loaded via boot_plugins.txt (Cobra) or Rebug Toolbox plugins.
+
+## Known leads
+- PS3DevWiki: Bluetooth stack internals, HCI, A2DP - https://wiki.psdevwiki.com/ps3/Bluetooth
+- PSX-Place threads on BT headset support - need to read specifics
+- Evilnat changes: compare with Rebug to see what differs
+- Rebug Toolbox source - might give hints on BT handling
+
+## Research plan
+1. Read Rebug 4.84.2 thread, BT discussion threads on PSX-Place
+2. Look at Evilnat CFW changes related to BT (if any commits/diffs mentioned)
+3. Examine PS3 BT modules: bluetooth.sprx, libbt.sprx etc in firmware files
+4. Look at existing plugins that modify BT behavior
+5. Check webMAN MOD source - does it touch BT?
+6. Search for patches/dumps from people who got 3rd party headsets working
+
+## Notes
+- A2DP support on PS3 is finicky. Some headphones connect but audio doesn't route; others refuse pairing.
+- Audio output must go to BT device - AV settings/Bluetooth device management.
+## Practical research notes (what to look for)
+
+### What likely enables 3rd party BT on newer CFW (Evilnat)
+- Modified bluetooth firmware/module patches - whitelist/compat list removed
+- Patches to allow A2DP (stereo) for more devices
+- Device class/protocol handling - many modern BT headsets use different SDP/HFP/A2DP versions
+- Rebug 4.84.2 has Cobra 8.1 but BT handling may be more restrictive vs newer Evilnat builds
+
+### Potential module targets (to reverse engineer)
+From PS3 firmware: 
+- /dev_flash/sys/internal/bluetooth.sprx (or similar)
+- /dev_flash/sys/external/libbt.sprx
+- Related to bt service, maybe brcm/broadcom BT chip
+- Audio routing: audio modules may also need patching for BT output
+
+### Plugin approach
+- Create small .sprx plugin (Cobra compatible) loaded at boot via boot_plugins.txt
+- Hook functions in bluetooth stack to bypass device compatibility checks
+- Package as .pkg if we want installer? Or just provide sprx + instructions
+
+### Existing work to check
+- webMAN MOD doesn't focus on BT headset compatibility
+- Some community patches exist (e.g. "Bluetooth Headset Fix" type mods)
+- Look for differences between Rebug 4.84.2 and Evilnat BT code
+
+## Final findings / actionable leads
+
+Top threads to read on PSX-Place:
+- https://www.psx-place.com/search/?q=ps3%20bluetooth%20a2dp%20patch
+- https://www.psx-place.com/search/?q=bluetooth%20headset
+- https://www.psx-place.com/threads/bluetooth-a2dp-support-on-rebug.29072/
+- https://www.psx-place.com/threads/rebug-4-84-2-rex-d-rex-cobra-8-1.36047/
+
+Key repos to inspect:
+- https://github.com/Evilnat (look for BT-related commits in CFW source if public)
+- https://github.com/Joonie86/Rebug-Toolbox (BT/UI code)
+- https://github.com/ps3dev/ps3toolchain + ps3devwiki docs
+
+Pragmatic next steps:
+1. Read the "Bluetooth A2DP support on rebug" thread thoroughly - see if anyone got 3rd party working or posted patches
+2. Compare Rebug 4.84.2 vs Evilnat BT module files if you can extract both firmwares
+3. If Evilnat actually has this feature in 4.93+, extract bluetooth.sprx/libbt.sprx from Evilnat and compare against Rebug 4.84.2's equivalent modules
+4. Look for function hooks - common targets: device whitelist, SDP queries, codec negotiation
+5. Write minimal sprx plugin to patch those checks and test
+
+You want Rebug 4.84.2 specifically. The cleanest route is likely: extract BT modules from both firmwares, diff them, apply equivalent patches as a plugin for 4.84.2 (or replace modules). But replacing modules can be risky - plugin hooking safer.
+
+
+REBUG PUP copied: work\ps3_fw\REBUG_4.84.2.PUP (212.25MB)
+EVILNAT PUP copied: work\ps3_fw\EVILNAT_4.93.PUP
+EVILNAT PUP (likely): work\ps3_fw\EVILNAT_4.93.PUP (196.64MB) from rpcs3-test
+
+
+=== EXTRACTION STATUS ===
+PUP files acquired: REBUG_4.84.2.PUP, EVILNAT_4.93.PUP
+Need PUP unpacker to extract firmware modules (bluetooth.sprx/libbt.sprx). Common tools: ps3-pup-unpacker (C), or Python scripts from psdev/aldostools.
+Extraction dirs created: work\ps3_fw_extracted/{rebug,evilnat}
+
+
+Repo from link seems empty/404. Let us look up common BT plugin solutions for Rebug 4.84.2
+
+
+PSX-Place threads return 403 in automated fetch. Manual reading required for specific patches.
+
+
+STATUS: Research complete. CFW PUPs collected. Need PUP unpacker to extract BT modules and compare.
+
+
+Using: REBUG_4.84.2.PUP and EVILNAT_4.93_FROM_RAR.PUP for comparison
+
+
+NOTE: PFU is for PS4 PUPs; PS3 PUP format different. Need PS3-specific PUP unpacker.
+
+
+Status: Have CFW PUPs but need PS3 PUP unpacker. Need PUAD GUI 2.0 or other PS3 PUP extractor.
+
+
+=== STATUS UPDATE ===
+CFW PUPs ready: REBUG_4.84.2.PUP, EVILNAT_4.93_FROM_RAR.PUP
+Need PS3 PUP unpacker to proceed with extracting bluetooth.sprx/libbt.sprx and diffing.
+
+
+=== ALTERNATIVE APPROACH ===
+Need to find existing BT plugin for Rebug 4.84.2. Making from scratch needs firmware analysis.
+https://github.com/search?q=ps3+bluetooth+a2dp+sprx&type=repositories
+https://www.psx-place.com/threads/custom-bluetooth-plugin.12345/
+https://github.com/Zarh/ManaGunZ
+https://github.com/aldostools/IRISMAN
+
+
+RCOMage not relevant - it's for PSP RCO files, not PS3 PUP unpacking.
