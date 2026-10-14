@@ -40,8 +40,37 @@ webMAN MOD auto-maps `/dev_hdd0/tmp/libaudio.sprx` at boot.
 ## Result / limits
 * Works, but **mono / low quality** (rides the compressed voice channel).
 * Headset must still **pair** normally, else the patch does nothing.
-* Better quality/zero‑risk: a **USB Bluetooth transmitter** (PS3 sees it as a
-  USB sound card) — the scene's recommended method.
+* **Deal-breaker on many modern headsets:** the moment the PS3 is told to use the
+  headset as the *audio output device* it opens the HSP/SCO **voice link**, and
+  some headsets (e.g. Bose QC35) **drop that link after a few seconds**. The
+  patch cannot fix a link that will not stay up.
+
+## When the software patch cannot help (headset keeps dropping)
+The PS3's Bluetooth only carries the **chat / HSP** channel. It was never built
+for A2DP, so it is picky about non‑Sony headsets. If the headset disconnects a
+few seconds after you assign it as output, stop fighting the radio and move the
+audio off Bluetooth — the PS3 then treats it as a normal audio device and the
+link is rock solid.
+
+Two reliable hardware routes (no libaudio patch needed):
+
+1. **USB Bluetooth transmitter (recommended).**
+   A USB dongle that presents itself as a **USB sound card**. The PS3 sends full
+   **stereo game audio** to it and the dongle does A2DP to the headset.
+   PS3 sees native USB audio; the headset is paired to the *dongle*, not the PS3.
+
+2. **Optical (TOSLINK) Bluetooth transmitter.**
+   PS3 → `Settings > Sound Settings > Audio Output Settings > Optical Digital`
+   → transmitter → A2DP → headset. Works with any PS3 revision and gives stereo.
+
+Either way: **pair the QC35 to the transmitter, unpair it from the PS3**, and you
+get stereo game audio with a stable link.
+
+## Sources
+* https://github.com/aldostools/webMAN-MOD/issues/493
+* https://github.com/aldostools/Resources/releases (Addons)
+* https://www.psx-place.com/threads/get-game-audio-sound-from-headset-bluetooth-usb-not-only-in-chat.26999/
+* https://manuals.playstation.net/document/en/ps3/current/settings/audiodevice.html
 
 ## Sources
 * https://github.com/aldostools/webMAN-MOD/issues/493
