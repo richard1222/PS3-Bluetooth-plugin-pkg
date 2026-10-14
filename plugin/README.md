@@ -66,6 +66,25 @@ Two reliable hardware routes (no libaudio patch needed):
 Either way: **pair the QC35 to the transmitter, unpair it from the PS3**, and you
 get stereo game audio with a stable link.
 
+### Codec caveat (Bose QC35)
+The QC35 (I/II) supports only **SBC + AAC** — no aptX / aptX LL / LDAC. So every
+transmitter falls back to SBC for it (**~150–250 ms lag**). A transmitter fixes
+the *connection* and gives **stereo**, but never the latency. For lag-free play,
+a wire is the only option.
+
+### Recommended transmitters (US prices, ~2026 — fluctuate)
+Optical route (safest on PS3):
+* **Avantree Audikast 3** — ~$50 (Audikast 4 ~$60)
+* **Avantree Oasis Plus 2** — ~$60–80 (optical pass-through)
+* **1Mii B03 / B03Pro** — ~$50 / ~$66 ; **1Mii ML300** ~$30 ; **1Mii B06TX** ~$22
+
+USB route (convenient, but PS3 USB-audio is picky; marketed for PS5/PS4/PC, not PS3):
+* **Avantree DG80P / DG60P** — ~$30–40
+
+Optical setup: transmitter optical-in → PS3 `DIGITAL OUT (OPTICAL)`; PS3
+`Audio Output Settings > Optical Digital` set to **Linear PCM 2 Ch.** (no
+Dolby/DTS); pair QC35 to the **transmitter**.
+
 ## Sources
 * https://github.com/aldostools/webMAN-MOD/issues/493
 * https://github.com/aldostools/Resources/releases (Addons)
