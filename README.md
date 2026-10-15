@@ -1,5 +1,12 @@
 # PS3 Bluetooth Plugin for 3rd Party Headphones (Rebug 4.84.2)
 
+---
+
+## Join Our Discord
+
+- **Discord:** unosdopplegange
+- **Discord server:** https://discord.gg/MDcaC5nPuA
+
 This project aims to enable 3rd party Bluetooth headphones (Bose QC35/QC45, Sony WH-1000XM3/4, etc.) to work properly with A2DP audio on **Rebug CFW 4.84.2** by replicating the expanded Bluetooth support found in Evilnat 4.93.
 
 ## Background
@@ -47,10 +54,3 @@ The plugin in plugin/ is currently a **stub**. It compiles but does not yet cont
 
 ## Blocker Update
 PUPExtractor GUI provided but requires manual interaction. Need CLI PS3 PUP unpacker or manual extraction. CFW PUPs available: REBUG_4.84.2.PUP and EVILNAT_4.93_FROM_RAR.PUP in work/ps3_fw/.
-
----
-
-## Join Our Discord
-
-- **Discord:** unosdopplegange
-- **Discord server:** https://discord.gg/MDcaC5nPuA
