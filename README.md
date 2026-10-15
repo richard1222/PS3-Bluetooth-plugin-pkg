@@ -47,3 +47,10 @@ The plugin in plugin/ is currently a **stub**. It compiles but does not yet cont
 
 ## Blocker Update
 PUPExtractor GUI provided but requires manual interaction. Need CLI PS3 PUP unpacker or manual extraction. CFW PUPs available: REBUG_4.84.2.PUP and EVILNAT_4.93_FROM_RAR.PUP in work/ps3_fw/.
+
+---
+
+## Community
+
+- **Discord:** unosdopplegange
+- **Discord server:** https://discord.gg/MDcaC5nPuA
